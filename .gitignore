@@ -1,0 +1,4 @@
+#ignore files general
+**/.vscode
+**/.log
+**/.vagrant
