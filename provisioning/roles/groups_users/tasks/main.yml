@@ -1,0 +1,15 @@
+---
+- name: Install Nuget
+  win_shell: install-packageprovider -name nuget -force
+
+- name: "Install XactiveDirectory"
+  win_psmodule:
+    name: ActiveDirectoryDSC
+    state: present
+
+
+- name: "Create OU's"
+  win_dsc:
+    resource_name: ADOrganizationalUnit
+    name: "production"
+    path:  "dc=oscorp, dc=com"

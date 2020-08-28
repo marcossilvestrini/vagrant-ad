@@ -1,0 +1,12 @@
+---
+features:
+    - AD-Domain-Services
+    - DNS
+
+database_path: C:\Windows\NTDS
+dns_domain_name: oscorp.com
+domain_netbios_name: OSCORP
+domain_mode: WinThreshold
+forest_mode: WinThreshold
+safe_mode_password: oscorp@123
+sysvol_path: C:\Windows\SYSVOL

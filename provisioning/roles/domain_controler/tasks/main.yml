@@ -1,0 +1,20 @@
+---
+- name: Install Windows Server Features
+  win_feature:
+    name: '{{ item }}'
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  loop: '{{ features }}'
+
+- name: Create new Windows Domain in a New Forest
+  win_domain:
+    create_dns_delegation: no
+    database_path: '{{ database_path }}'
+    dns_domain_name: '{{ dns_domain_name }}'
+    domain_mode: '{{ domain_mode }}'
+    domain_netbios_name: '{{ domain_netbios_name }}'
+    forest_mode: '{{ forest_mode }}'
+    safe_mode_password: '{{ safe_mode_password }}'
+    sysvol_path: '{{ sysvol_path }}'
+  register: domain_install

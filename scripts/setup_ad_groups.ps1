@@ -19,4 +19,3 @@ $serverInfos['groups'] | ForEach-Object{
 
 Write-Host "Get all of the OUs in a domain..." -ForegroundColor Red -BackgroundColor White
 Get-ADOrganizationalUnit -Filter 'Name -like "*"' | Format-Table Name, DistinguishedName -A
-Start-Sleep 10

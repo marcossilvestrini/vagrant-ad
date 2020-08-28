@@ -1,16 +1,55 @@
 ---
-- name: Install Commons Packages
-  dnf:
-    name: '{{ item }}'
-    state: latest
-  loop:
-    - '{{ common_packages }}'
-  become: yes
+- name: Initial Setup
+  win_shell: |
+    $publicInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*192.168.0*"}
+    $natInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*10.0.2*" }
 
-- name: Create Logs directory
-  file:
-    path: '{{ logs }}'
-    state: directory
-    owner: vagrant
-    group: vagrant
-    mode: 0775
+    # Disable IPV6 in Public Network
+    Disable-NetAdapterBinding -Name $publicInfos.InterfaceAlias -ComponentID ms_tcpip6 -PassThru
+
+    # Disable IPV6 in Nat Network
+    Disable-NetAdapterBinding -Name $natInfos.InterfaceAlias -ComponentID ms_tcpip6 -PassThru
+
+    # Setup Powershell
+
+    ## Enable remotly execution
+    Enable-PSRemoting -force
+    Set-ExecutionPolicy -Scope process -ExecutionPolicy RemoteSigned -force
+
+    ## Set TrustedHosts
+    Set-Item WSMan:\localhost\Client\TrustedHosts * -force
+
+    ## Set WMI
+    winrm quickconfig -force >$null
+
+    $wmi= Get-WmiObject win32_networkadapterconfiguration |Where-Object{$_.IPAddress -like "*192.168.0*"}
+    $wmi.SetGateways("192.168.0.1", 1)
+
+- name: Disable Firewall for Domain, Public and Private profiles
+  win_firewall:
+    state: disabled
+    profiles:
+    - Domain
+    - Private
+    - Public
+  tags: disable_firewall
+
+- name: Create Local User
+  win_user:
+    name: '{{ user }}'
+    password: '{{ password }}'
+    state: present
+    update_password: on_create
+    password_never_expires: yes
+    groups:
+      - Users
+      - Administrators
+      - Distributed COM Users
+      - Remote Management Users
+      - Remote Desktop Users
+
+- name: Install Commons Packages
+  win_chocolatey:
+    name: '{{ item }}'
+    state: present
+  loop: '{{ common_packages }}'

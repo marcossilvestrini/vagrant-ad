@@ -1,49 +1,7 @@
 ---
-# DB
-db_ip: '192.168.0.33'
-db_user: protheus
-db_pass: protheus
+# SERVER AD
+ad_ip: 192.168.0.132
+client_ip: 192.168.0.133
 
-# Paths of App Stack
-# App Path
-app_path: /totvs
-
-# Bin
-start_path: '{{ app_path }}/bin'
-
-# appserver
-appserver_path: '{{ start_path }}/appserver'
-
-# Smartclient
-smartclient_path: '{{ start_path}}/smartclient'
-
-# Monitor
-monitor_path: '{{ start_path}}/monitor'
-
-# Dictionary
-dictionary_path: '{{ app_path }}/protheus-data'
-
-# RPO
-rpo_path: '{{ app_path }}/rpo'
-
-# Logs path
-logs: '{{ app_path }}/logs'
-
-# Scripts path
-script_path: /etc/init.d
-
-# License
-license_ip: '192.168.0.133'
-license_server_port: 5555
-
-# Dbaccess
-dbaccess_master_port: 7900
-dbaccess_slave_port: 7901
-dbaccess_ws_port: 7902
-
-# Lockserver
-lockserver_port: 7020
-lockserver_ip: localhost
-
-# Protheus Environments
-environment: SKYNET
+user: marcos.silvestrini
+password: server@123

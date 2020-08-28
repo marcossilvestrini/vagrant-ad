@@ -28,6 +28,7 @@
 - Vagrant: <https://www.vagrantup.com/docs/index.html>
 - Ansible: <https://docs.ansible.com/ansible/latest/index.html>
 - Powershell modules used in this project:<https://docs.microsoft.com/en-us/powershell/module/>
+- Active Directory with DSC: <http://www.ntweekly.com/2020/08/28/create-organizational-units-with-ansible-on-active-directory/>
 
 ## Install Vagrant in Rhel Centos 7\8
 

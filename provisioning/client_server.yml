@@ -1,0 +1,6 @@
+# - hosts: client
+#   become: yes
+#   #vars_files:
+#     #- roles/jenkins/vars/main.yml
+#   # roles:
+#   #   - commom
