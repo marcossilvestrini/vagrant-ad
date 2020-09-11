@@ -1,7 +1,7 @@
 ---
 - name: Initial Setup
   win_shell: |
-    $publicInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*192.168.0*"}
+    $publicInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*{{ netID }}*"}
     $natInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*10.0.2*" }
 
     # Disable IPV6 in Public Network
@@ -22,8 +22,8 @@
     ## Set WMI
     winrm quickconfig -force >$null
 
-    $wmi= Get-WmiObject win32_networkadapterconfiguration |Where-Object{$_.IPAddress -like "*192.168.0*"}
-    $wmi.SetGateways("192.168.0.1", 1)
+    $wmi= Get-WmiObject win32_networkadapterconfiguration |Where-Object{$_.IPAddress -like "*{{ netID }}*"}
+    $wmi.SetGateways({{ default_gateway }}, 1)
 
 - name: Disable Firewall for Domain, Public and Private profiles
   win_firewall:

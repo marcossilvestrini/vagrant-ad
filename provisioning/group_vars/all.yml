@@ -1,7 +1,15 @@
 ---
+netID: 192.168.0
+default_gateway: '{{ netID}}.1'
+
 # SERVER AD
-ad_ip: 192.168.0.132
-client_ip: 192.168.0.133
+ad_ip: '{{ netID }}.132'
+client_ip: '{{ netID }}.133'
+
+domain_name: oscorp.com
+dns2: 1.1.1.1
 
 user: marcos.silvestrini
 password: server@123
+
+department_name: developers

@@ -4,7 +4,7 @@ features:
     - DNS
 
 database_path: C:\Windows\NTDS
-dns_domain_name: oscorp.com
+dns_domain_name: '{{ domain_name }}'
 domain_netbios_name: OSCORP
 domain_mode: WinThreshold
 forest_mode: WinThreshold

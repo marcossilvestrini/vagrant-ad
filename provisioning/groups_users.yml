@@ -1,0 +1,3 @@
+- hosts: ad
+  roles:
+    - groups_users

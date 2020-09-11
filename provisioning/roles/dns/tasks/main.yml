@@ -1,0 +1,34 @@
+---
+- name: Create DNS Zones
+  win_shell: |
+    $netInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*192.168.0*" }
+    $serverInfos = [ordered]@{
+      serverName        = "srvdc01"
+      dns1          = $netInfos.IPAddress
+      dns2          = '1.1.1.1'
+      domainName    = 'oscorp.com'
+    }
+
+    # Primary Zone
+    Add-DnsServerPrimaryZone -Name "$($serverInfos.serverName).$($serverInfos.domainName)" -ReplicationScope "Domain" -PassThru
+
+    # Reverse Lookup Zone
+    Add-DnsServerPrimaryZone -NetworkID "192.168.0.0/24" -ReplicationScope "Domain"
+    # Get-DnsServerZone
+
+    # Test Configs
+    Test-DnsServer -IPAddress $serverInfos.dns1 -ZoneName $serverInfos.domainName
+
+    # Add A Host Records
+    Add-DnsServerResourceRecordA -Name srv01 -ZoneName $serverInfos.domainName -IPv4Address 192.168.0.133
+    # Get-DnsServerResourceRecord -ZoneName $serverInfos.domainName -RRType A
+
+    # PTR Reverse Zone
+    Add-DnsServerResourceRecordPtr `
+    -Name "142" `
+    -PtrDomainName "$($serverInfos.serverName).$($serverInfos.domainName)" `
+    -ZoneName "0.168.192.in-addr.arpa" `
+    -computerName $serverInfos.domainName
+
+    # Set DNS
+    Set-DNSClientServerAddress –InterfaceIndex $netInfos.InterfaceIndex –ServerAddresses $serverInfos.dns1,$serverInfos.dns2

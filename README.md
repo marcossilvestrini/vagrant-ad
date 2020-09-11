@@ -65,6 +65,7 @@ vagrant plugin install vagrant-vbguest
 - Set ressources memory and cpu
 - Configure Network and forwarded port
 - Configure Mounts
+- Provisioning
 
 ## Fix Error SSH in Vagrant Windows
 
@@ -79,12 +80,18 @@ vagrant plugin install vagrant-vbguest
 - Setup Powershell
 - Create local users
 - Install Packages
+- Setup Ansible
 
 ## Setup Active Directory and DNS
 
 - Install Features AD and DNS
 - Install-ADDSForest
-- Create AD Groups (production,ha,dev)
+- Create OU's (production,ha,dev)
 - Create DNS Primary Zone
 - Create Reverse Lookup Zone.
+- Add A Host Records
+- Add PTR Reverse Zone
 - Set Default DNS server
+- Create Domain Groups
+- Add Users in Domain Groups
+- Join Server Client in Active Directory

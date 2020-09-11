@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Marcos Silvestrini
-  description: Role for Setup Active Directory
+  description: Role for Join Servers in Active Directory
   company: Silvestrini
   license: MIT
   min_ansible_version: 2.7
@@ -16,5 +16,4 @@ galaxy_info:
     - Vagrant
     - Powershell
 
-dependencies:
-  - common
+dependencies: []

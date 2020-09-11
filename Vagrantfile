@@ -48,42 +48,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     srvdc01.vm.provider "virtualbox" do |vb|
       vb.linked_clone = true
       vb.name = VM_DC_NAME
-      vb.memory = 4096
+      vb.memory = 2048
       vb.cpus = 3
     end
 
     # PROVISION
-    # FIX  WinRM::WinRMAuthorizationError
-    #srvdc01.vm.provision "shell", inline: "& C:\scripts\fix_winrm.bat"
 
-     # SETUP ANSIBLE
+    # #  # SETUP ANSIBLE
+    # srvdc01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
 
-     # srvdc01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
+    # # SETUP AD SERVER
+    # srvdc01.vm.provision "ansible" do |ansible|
+    #   ansible.limit = "all"
+    #   ansible.inventory_path = "provisioning/hosts"
+    #   ansible.playbook = "provisioning/domain_controler.yml"
+    # end
 
-    # SETUP AD SERVER
+    # # REBOOT SERVER
+    # srvdc01.vm.provision :reload
+
+    # SETUP DNS
     srvdc01.vm.provision "ansible" do |ansible|
       ansible.limit = "all"
       ansible.inventory_path = "provisioning/hosts"
-      ansible.playbook = "provisioning/ad_server.yml"
+      ansible.playbook = "provisioning/dns.yml"
     end
 
-    # srvdc01.vm.provision :reload
-
-    # # INITIAL SETUP
-    # srvdc01.vm.provision "shell", path: "scripts/setup.ps1"
-
-    # # INSTALL AD
-    # srvdc01.vm.provision "shell", path: "scripts/setup_ad.ps1"
-
-    # srvdc01.vm.provision "shell", inline: "echo 'INSTALLER: Setup complete, Active Directory Configured with success!'"
-
-    # # CREATE FOREST
-    # srvdc01.vm.provision "shell", path: "scripts/setup_ad_groups.ps1"
-    # srvdc01.vm.provision "shell", inline: "echo 'INSTALLER: Create AD Groups with success!'"
-
-    # # SETUP DNS
-    # srvdc01.vm.provision "shell", path: "scripts/setup_dns.ps1"
-    # srvdc01.vm.provision "shell", inline: "echo 'INSTALLER: Setup complete, DNS Configured with success!'"
+    # #  CREATE GROUPS AND USERS
+    # srvdc01.vm.provision "ansible" do |ansible|
+    #   ansible.limit = "all"
+    #   ansible.inventory_path = "provisioning/hosts"
+    #   ansible.playbook = "provisioning/groups_users.yml"
+    # end
 
   end
 
@@ -91,7 +87,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.define "srv01" do |srv01|
 
   #   # VARIABLE HOSTNAME
-  #   VM_CLIENT_NAME= "win2019-srv01"
+  #   VM_CLIENT_NAME= "srv01"
 
   #   # HOSTNAME
   #   srv01.vm.hostname = VM_CLIENT_NAME
@@ -112,10 +108,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   end
 
   #   # PROVISION
-  #    # SSH,FIREWALLD AND SELINUX
-  #   srv01.vm.provision "shell", inline: <<-SHELL
-  #     Get-ExecutionPolicy
-  #   SHELL
+  #
+      # SETUP ANSIBLE
+      # srv01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
+
+      # SETUP AD SERVER
+      # srv01.vm.provision "ansible" do |ansible|
+      #   ansible.limit = "all"
+      #   ansible.inventory_path = "provisioning/hosts"
+      #   ansible.playbook = "provisioning/client_server.yml"
+      # end
 
   # end
 

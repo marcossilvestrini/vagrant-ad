@@ -1,5 +1,0 @@
-- hosts: ad
-  roles:
-    # - common
-    # - domain_controler
-    - groups_users

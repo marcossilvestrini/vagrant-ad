@@ -2,14 +2,58 @@
 - name: Install Nuget
   win_shell: install-packageprovider -name nuget -force
 
-- name: "Install XactiveDirectory"
+- name: Install XactiveDirectory
   win_psmodule:
     name: ActiveDirectoryDSC
     state: present
 
-
-- name: "Create OU's"
+- name: Create OU's
   win_dsc:
     resource_name: ADOrganizationalUnit
-    name: "production"
+    name: '{{ item }}'
     path:  "dc=oscorp, dc=com"
+  loop: '{{ ou_names }}'
+
+# - name: Get department_name users
+#   win_shell: (get-aduser -LDAPFilter "(department={{ department_name }})").samaccountname
+#   register: ad_users_list
+#   changed_when: False
+
+- name: Create Groups
+  win_domain_group:
+    name: "{{ department_name }}_department"
+    attributes:
+      description: Developers Managed Group
+      displayname: "{{ department_name | title }} Department"
+    scope: universal
+    state: present
+    category: security
+    organizational_unit: OU=development,DC=oscorp,DC=com
+
+- name: Add User in Group Development
+  win_domain_group_membership:
+    name: "{{ department_name }}_department"
+    members: "{{ user }}"
+    state: pure
+
+- name: Add User in Group Development
+  win_domain_group_membership:
+    name: "{{ department_name }}_department"
+    members: vagrant
+    state: pure
+
+- name: Add user in Domain Groups
+  win_domain_user:
+    name: "{{ user }}"
+    password: "{{ password }}"
+    state: present
+    path: ou=development,dc=oscorp,dc=com
+    groups:
+      - Administrators
+      - Domain Admins
+      - Domain Computers
+      - Domain Controllers
+      - Domain Guests
+      - Domain Users
+      - Enterprise Admins
+      - DnsAdmins
