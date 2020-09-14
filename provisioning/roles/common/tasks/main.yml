@@ -47,6 +47,7 @@
       - Distributed COM Users
       - Remote Management Users
       - Remote Desktop Users
+  ignore_errors: True
 
 - name: Install Commons Packages
   win_chocolatey:
