@@ -45,11 +45,10 @@
 
 ### Install Vagrant Plugins
 
-vagrant plugin install vagrant-hostmanager
-vagrant plugin install vagrant-reload
-vagrant plugin install vagrant-scp
-vagrant plugin install vagrant-share
-vagrant plugin install vagrant-vbguest
+- vagrant plugin install vagrant-hostmanager
+- vagrant plugin install vagrant-reload
+- vagrant plugin install vagrant-scp
+- vagrant plugin install vagrant-vbguest
 
 ## Create Box
 
@@ -65,6 +64,7 @@ vagrant plugin install vagrant-vbguest
 - Set ressources memory and cpu
 - Configure Network and forwarded port
 - Configure Mounts
+- Setup Ansible
 - Provisioning
 
 ## Fix Error SSH in Vagrant Windows
@@ -72,17 +72,7 @@ vagrant plugin install vagrant-vbguest
 - Run this command in powershell:
 - $Env:VAGRANT_PREFER_SYSTEM_BIN += 0
 
-## Setup VM
-
-- Disable IPV6
-- Disable Firewall
-- Enable Remote Access
-- Setup Powershell
-- Create local users
-- Install Packages
-- Setup Ansible
-
-## Setup Active Directory and DNS
+## Tasks Active Directory and DNS
 
 - Install Features AD and DNS
 - Install-ADDSForest
@@ -95,3 +85,48 @@ vagrant plugin install vagrant-vbguest
 - Create Domain Groups
 - Add Users in Domain Groups
 - Join Server Client in Active Directory
+
+## Playbooks
+
+- domain_controler: Install and Configure Domain Controler
+- dns: Configure DNS Server
+- groups_users: Configure Groups and Users in Domain
+- client_server: Join cliente servers in Forest\Domain\OU's
+
+## Roles
+
+### commoms
+
+- Disable IPV6
+- Disable Firewall
+- Enable Remote Access
+- Setup Powershell
+- Create local users
+- Install Packages
+
+### domain_controler
+
+- Install Windows Server Features
+- Create new Windows Domain in a New Forest
+
+### dns
+
+- Create Primary Zone
+- Create Reverse Lookup Zone
+- Add A Host Records
+- Create PTR Reverse Zone
+- Set Default DNS for public interface
+
+### groups_users
+
+- Install Nuget
+- Install XactiveDirectory
+- Create OU's
+- Create Groups
+- Add User in Group Development
+- Add User in Others Groups
+
+### join_servers
+
+- Set Default DNS
+- Join to the domain

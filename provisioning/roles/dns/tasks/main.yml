@@ -19,11 +19,11 @@
     # Test Configs
     Test-DnsServer -IPAddress $serverInfos.dns1 -ZoneName $serverInfos.domainName
 
-    # Add A Host Records
+    # Create A Host Records
     Add-DnsServerResourceRecordA -Name srv01 -ZoneName $serverInfos.domainName -IPv4Address 192.168.0.133
     # Get-DnsServerResourceRecord -ZoneName $serverInfos.domainName -RRType A
 
-    # PTR Reverse Zone
+    # Create PTR Reverse Zone
     Add-DnsServerResourceRecordPtr `
     -Name "142" `
     -PtrDomainName "$($serverInfos.serverName).$($serverInfos.domainName)" `

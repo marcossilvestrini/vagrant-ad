@@ -36,13 +36,13 @@
     members: "{{ user }}"
     state: pure
 
-- name: Add User in Group Development
+- name: Add User Vagrant in Group Development
   win_domain_group_membership:
     name: "{{ department_name }}_department"
     members: vagrant
     state: pure
 
-- name: Add user in Domain Groups
+- name: Add User Others Groups
   win_domain_user:
     name: "{{ user }}"
     password: "{{ password }}"

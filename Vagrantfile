@@ -54,18 +54,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # PROVISION
 
-    # #  # SETUP ANSIBLE
-    # srvdc01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
+    #  # SETUP ANSIBLE
+    srvdc01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
 
-    # # SETUP AD SERVER
-    # srvdc01.vm.provision "ansible" do |ansible|
-    #   ansible.limit = "all"
-    #   ansible.inventory_path = "provisioning/hosts"
-    #   ansible.playbook = "provisioning/domain_controler.yml"
-    # end
+    # SETUP AD SERVER
+    srvdc01.vm.provision "ansible" do |ansible|
+      ansible.limit = "all"
+      ansible.inventory_path = "provisioning/hosts"
+      ansible.playbook = "provisioning/domain_controler.yml"
+    end
 
     # # REBOOT SERVER
-    # srvdc01.vm.provision :reload
+    srvdc01.vm.provision :reload
 
     # SETUP DNS
     srvdc01.vm.provision "ansible" do |ansible|
@@ -74,51 +74,51 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "provisioning/dns.yml"
     end
 
-    # #  CREATE GROUPS AND USERS
-    # srvdc01.vm.provision "ansible" do |ansible|
-    #   ansible.limit = "all"
-    #   ansible.inventory_path = "provisioning/hosts"
-    #   ansible.playbook = "provisioning/groups_users.yml"
-    # end
+    #  CREATE GROUPS AND USERS
+    srvdc01.vm.provision "ansible" do |ansible|
+      ansible.limit = "all"
+      ansible.inventory_path = "provisioning/hosts"
+      ansible.playbook = "provisioning/groups_users.yml"
+    end
 
   end
 
   # # VM CLIENT
-  # config.vm.define "srv01" do |srv01|
+  config.vm.define "srv01" do |srv01|
 
-  #   # VARIABLE HOSTNAME
-  #   VM_CLIENT_NAME= "srv01"
+    # VARIABLE HOSTNAME
+    VM_CLIENT_NAME= "srv01"
 
-  #   # HOSTNAME
-  #   srv01.vm.hostname = VM_CLIENT_NAME
+    # HOSTNAME
+    srv01.vm.hostname = VM_CLIENT_NAME
 
-  #   # NETWORK
-  #   srv01.vm.network "public_network" ,ip: "192.168.0.133"
-  #   #srv01.vm.network "forwarded_port", guest: 5432, host: 5432, adapter: 1 , guest_ip: "192.168.0.132" ,host_ip: "192.168.0.33"
+    # NETWORK
+    srv01.vm.network "public_network" ,ip: "192.168.0.133"
+    #srv01.vm.network "forwarded_port", guest: 5432, host: 5432, adapter: 1 , guest_ip: "192.168.0.132" ,host_ip: "192.168.0.33"
 
-  #   # MOUNTS
-  #   srv01.vm.synced_folder ".", "/vagrant", disabled: true
-  #   srv01.vm.synced_folder "./scripts", "/scripts"
+    # MOUNTS
+    srv01.vm.synced_folder ".", "/vagrant", disabled: true
+    srv01.vm.synced_folder "./scripts", "/scripts"
 
-  #   # PROVIDER
-  #   srv01.vm.provider "virtualbox" do |vb|
-  #     vb.name = VM_CLIENT_NAME
-  #     vb.memory = 2048
-  #     vb.cpus = 3
-  #   end
+    # PROVIDER
+    srv01.vm.provider "virtualbox" do |vb|
+      vb.name = VM_CLIENT_NAME
+      vb.memory = 2048
+      vb.cpus = 3
+    end
 
-  #   # PROVISION
-  #
+    # PROVISION
+
       # SETUP ANSIBLE
-      # srv01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
+      srv01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
 
       # SETUP AD SERVER
-      # srv01.vm.provision "ansible" do |ansible|
-      #   ansible.limit = "all"
-      #   ansible.inventory_path = "provisioning/hosts"
-      #   ansible.playbook = "provisioning/client_server.yml"
-      # end
+      srv01.vm.provision "ansible" do |ansible|
+        ansible.limit = "all"
+        ansible.inventory_path = "provisioning/hosts"
+        ansible.playbook = "provisioning/client_server.yml"
+      end
 
-  # end
+  end
 
 end

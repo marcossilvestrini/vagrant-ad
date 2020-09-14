@@ -2,18 +2,12 @@
 - name: Set DNS
   win_shell: |
     $netInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*192.168.0*" }
-    $serverInfos = [ordered]@{
-      dns1          = $netInfos.IPAddress
-      dns2          = {{ dn2 }}
-      domainName    = {{ domain_name}}
-    }
+    $dns1          = $netInfos.IPAddress
+    $dns2          = '1.1.1.1'
 
-    Add-DnsServerPrimaryZone -Name "$($serverInfos.serverName).$($serverInfos.domainName)" -ReplicationScope "Domain" -PassThru
-    Add-DnsServerPrimaryZone -NetworkID "192.168.0.0/24" -ReplicationScope "Domain"
-    Test-DnsServer -IPAddress $serverInfos.dns1 -ZoneName $serverInfos.domainName
-    Set-DNSClientServerAddress –InterfaceIndex $netInfos.InterfaceIndex –ServerAddresses $serverInfos.dns1, {{ dns2 }}
+    Set-DNSClientServerAddress –InterfaceIndex $netInfos.InterfaceIndex –ServerAddresses $dns1,$dns2
 
-- name: Join to the domain
+- name: Join Server in Domain
   win_domain_membership:
     dns_domain_name: '{{ domain_name }}'
     domain_admin_user: '{{ user }}'
