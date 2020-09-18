@@ -1,15 +1,17 @@
 ---
 - name: Set DNS
-  win_shell: |
-    $netInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*192.168.0*" }
-    $dns1          = $netInfos.IPAddress
-    $dns2          = '1.1.1.1'
+  win_dns_client:
+    adapter_names: '*'
+    ipv4_addresses:
+    - '{{ dns1 }}'
+    - '{{ dns1 }}'
 
-    Set-DNSClientServerAddress –InterfaceIndex $netInfos.InterfaceIndex –ServerAddresses $dns1,$dns2
-
-- name: Join Server in Domain
+- name: Join Server in OU's
   win_domain_membership:
     dns_domain_name: '{{ domain_name }}'
-    domain_admin_user: '{{ user }}'
+    hostname: '{{ client_server_name }}'
+    domain_admin_user: '{{ domain_user }}'
     domain_admin_password: '{{ password }}'
+    domain_ou_path: '{{ item }}'
     state: domain
+  loop: '{{ domain_ou_path }}'

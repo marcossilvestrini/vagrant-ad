@@ -16,4 +16,5 @@ galaxy_info:
     - Vagrant
     - Powershell
 
-dependencies: []
+dependencies:
+  - common

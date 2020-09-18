@@ -1,0 +1,34 @@
+List Features
+Get-WindowsFeature -name *domain*
+Get-WindowsFeature -name *dns*
+
+Local Users
+Get-LocalUser
+Get-ADUser -Filter * -SearchBase "DC=oscorp,DC=com" |
+Select-Object DistinguishedName,Name, SamAccountName
+
+Groups Users
+Get-ADPrincipalGroupMembership -Identity Administrator
+Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
+
+Get-ADGroupMember -Identity "Domain Controllers" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
+
+List AD
+Get-ADDomainController
+Get-ADDomain
+
+List OU
+Get-ADOrganizationalUnit -Filter 'Name -like "*"' | Format-Table Name, DistinguishedName -A
+Get-ADComputer -Filter * -SearchBase "OU=development, DC=oscorp, DC=com"
+
+DNS
+Test-DnsServer -IPAddress 192.168.0.132 -ZoneName oscorp.com
+Get-DnsServerZone -ComputerName srvdc01
+
+Get-DnsServerResourceRecord -ZoneName oscorp.com
+
+Get-DnsServerResourceRecord -ZoneName oscorp.com -RRType A
+
+Get-DnsServerResourceRecord -ComputerName oscorp.com -ZoneName "0.168.192.in-addr.arpa"
+
+

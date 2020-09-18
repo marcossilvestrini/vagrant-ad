@@ -1,3 +1,5 @@
 rsync -avzh --exclude=.vagrant --exclude=.git --progress /mnt/projects/vagrant-ad/ /home/marcos.silvestrini/vagrant-ad
 
 ansible-playbook -i provisioning/hosts/  provisioning/groups_users.yml  --private-key .vagrant/machines/srvdc01/virtualbox/private_key -u vagrant
+
+ansible -i provisioning/hosts/ srvdc01 win_ping  --private-key .vagrant/machines/srvdc01/virtualbox/private_key -u vagrant

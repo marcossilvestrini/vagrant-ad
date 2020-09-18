@@ -1,2 +1,5 @@
 ---
-
+domain_ou_path:
+    - OU=development,DC=oscorp,DC=com
+    - OU=ha,DC=oscorp,DC=com
+    - OU=production,DC=oscorp,DC=com

@@ -54,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # PROVISION
 
-    #  # SETUP ANSIBLE
+    # SETUP ANSIBLE
     srvdc01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
 
     # SETUP AD SERVER
@@ -64,15 +64,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "provisioning/domain_controler.yml"
     end
 
-    # # REBOOT SERVER
+    # REBOOT SERVER
     srvdc01.vm.provision :reload
-
-    # SETUP DNS
-    srvdc01.vm.provision "ansible" do |ansible|
-      ansible.limit = "all"
-      ansible.inventory_path = "provisioning/hosts"
-      ansible.playbook = "provisioning/dns.yml"
-    end
 
     #  CREATE GROUPS AND USERS
     srvdc01.vm.provision "ansible" do |ansible|
@@ -81,9 +74,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "provisioning/groups_users.yml"
     end
 
+    # SETUP DNS
+    srvdc01.vm.provision "ansible" do |ansible|
+      ansible.limit = "all"
+      ansible.inventory_path = "provisioning/hosts"
+      ansible.playbook = "provisioning/dns.yml"
+    end
+
   end
 
-  # # VM CLIENT
+  # VM CLIENT
   config.vm.define "srv01" do |srv01|
 
     # VARIABLE HOSTNAME
@@ -94,7 +94,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # NETWORK
     srv01.vm.network "public_network" ,ip: "192.168.0.133"
-    #srv01.vm.network "forwarded_port", guest: 5432, host: 5432, adapter: 1 , guest_ip: "192.168.0.132" ,host_ip: "192.168.0.33"
 
     # MOUNTS
     srv01.vm.synced_folder ".", "/vagrant", disabled: true
@@ -109,15 +108,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # PROVISION
 
-      # SETUP ANSIBLE
-      srv01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
+    # SETUP ANSIBLE
+    srv01.vm.provision "shell", path: "scripts/setup_ansible.ps1"
 
-      # SETUP AD SERVER
-      srv01.vm.provision "ansible" do |ansible|
-        ansible.limit = "all"
-        ansible.inventory_path = "provisioning/hosts"
-        ansible.playbook = "provisioning/client_server.yml"
-      end
+    # SETUP AD SERVER
+    srv01.vm.provision "ansible" do |ansible|
+      ansible.limit = "all"
+      ansible.inventory_path = "provisioning/hosts"
+      ansible.playbook = "provisioning/client_server.yml"
+    end
+
+     # # REBOOT SERVER
+    srv01.vm.provision :reload
 
   end
 

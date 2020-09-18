@@ -1,5 +1,5 @@
 [ad]
-192.168.0.132
+srvdc01 ansible_host=192.168.0.132
 
 [ad:vars]
 ansible_user= vagrant
@@ -7,9 +7,10 @@ ansible_password= vagrant
 ansible_connection= winrm
 ansible_winrm_transport= basic
 ansible_winrm_server_cert_validation= ignore
+ansible_python_interpreter=C:\Python38
 
 [client]
-192.168.0.133
+srv01 ansible_host=192.168.0.133
 
 [client:vars]
 ansible_user= vagrant
@@ -17,3 +18,4 @@ ansible_password= vagrant
 ansible_connection= winrm
 ansible_winrm_transport= basic
 ansible_winrm_server_cert_validation= ignore
+ansible_python_interpreter=C:\Python38

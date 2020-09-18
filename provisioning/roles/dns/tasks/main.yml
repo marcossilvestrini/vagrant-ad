@@ -1,34 +1,31 @@
 ---
-- name: Create DNS Zones
+- name: Set Default DNS
   win_shell: |
-    $netInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*192.168.0*" }
-    $serverInfos = [ordered]@{
-      serverName        = "srvdc01"
-      dns1          = $netInfos.IPAddress
-      dns2          = '1.1.1.1'
-      domainName    = 'oscorp.com'
-    }
+    $publicInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*{{ netID }}*"}
+    Set-DNSClientServerAddress –InterfaceIndex $publicInfos.InterfaceIndex –ServerAddresses "{{ dns1 }}", "{{ dns2 }}"
 
-    # Primary Zone
-    Add-DnsServerPrimaryZone -Name "$($serverInfos.serverName).$($serverInfos.domainName)" -ReplicationScope "Domain" -PassThru
+- name: Create Primary Zone
+  win_shell: |
+    Add-DnsServerPrimaryZone -Name "{{ ad_server_name }}.{{ domain_name }}" -ReplicationScope "Domain" -PassThru
+  ignore_errors: True
 
-    # Reverse Lookup Zone
-    Add-DnsServerPrimaryZone -NetworkID "192.168.0.0/24" -ReplicationScope "Domain"
+- name: Create Reverse Lookup Zone
+  win_shell: |
+    Add-DnsServerPrimaryZone -NetworkID "{{ netID }}.0/24" -ReplicationScope "Domain"
     # Get-DnsServerZone
+  ignore_errors: True
 
-    # Test Configs
-    Test-DnsServer -IPAddress $serverInfos.dns1 -ZoneName $serverInfos.domainName
+- name: Create (A IPv4Address) Host Records
+  win_shell: |
+    Add-DnsServerResourceRecordA -Name "{{ client_server_name }}" -ZoneName "{{ domain_name }}" -IPv4Address "{{ client_ip }}"
+    # Get-DnsServerResourceRecord -ZoneName "{{ domain_name }}" -RRType A
+  ignore_errors: True
 
-    # Create A Host Records
-    Add-DnsServerResourceRecordA -Name srv01 -ZoneName $serverInfos.domainName -IPv4Address 192.168.0.133
-    # Get-DnsServerResourceRecord -ZoneName $serverInfos.domainName -RRType A
-
-    # Create PTR Reverse Zone
+- name: Create PTR Reverse Zone
+  win_shell: |
     Add-DnsServerResourceRecordPtr `
-    -Name "142" `
-    -PtrDomainName "$($serverInfos.serverName).$($serverInfos.domainName)" `
+    -Name "132" `
+    -PtrDomainName "{{ ad_server_name }}.{{ domain_name }}" `
     -ZoneName "0.168.192.in-addr.arpa" `
-    -computerName $serverInfos.domainName
-
-    # Set DNS
-    Set-DNSClientServerAddress –InterfaceIndex $netInfos.InterfaceIndex –ServerAddresses $serverInfos.dns1,$serverInfos.dns2
+    -computerName "{{ domain_name }}"
+  ignore_errors: True
