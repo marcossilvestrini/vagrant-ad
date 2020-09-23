@@ -95,7 +95,7 @@
 
 ## Roles
 
-### commoms
+### commons
 
 - Disable IPV6
 - Disable Firewall
