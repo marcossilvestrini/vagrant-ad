@@ -1,5 +1,5 @@
 ---
-- name: Disable IPV6
+- name: Config Network
   win_shell: |
     $publicInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*{{ netID }}*"}
     $natInfos = Get-NetIPAddress | Where-Object { $_.IPAddress -like "*10.0.2*" }
@@ -7,6 +7,9 @@
     Disable-NetAdapterBinding -Name $publicInfos.InterfaceAlias -ComponentID ms_tcpip6 -PassThru
     # Disable IPV6 in Nat Network
     Disable-NetAdapterBinding -Name $natInfos.InterfaceAlias -ComponentID ms_tcpip6 -PassThru
+
+    $wmi= Get-WmiObject win32_networkadapterconfiguration |Where-Object{$_.IPAddress -like "*{{ netID }}*"}
+    $wmi.SetGateways("{{ default_gateway }}", 1)
 
 - name: Setup Powershell
   win_shell: |
@@ -19,9 +22,6 @@
 
     ## Set WMI
     winrm quickconfig -force >$null
-
-    $wmi= Get-WmiObject win32_networkadapterconfiguration |Where-Object{$_.IPAddress -like "*{{ netID }}*"}
-    $wmi.SetGateways("{{ default_gateway }}", 1)
 
 - name: Disable Firewall for Domain, Public and Private profiles
   win_firewall:
