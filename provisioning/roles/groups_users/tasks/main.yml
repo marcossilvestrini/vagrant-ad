@@ -14,11 +14,6 @@
     path:  "dc=oscorp, dc=com"
   loop: '{{ ou_names }}'
 
-# - name: Get department_name users
-#   win_shell: (get-aduser -LDAPFilter "(department={{ department_name }})").samaccountname
-#   register: ad_users_list
-#   changed_when: False
-
 - name: Create Groups
   win_domain_group:
     name: "{{ department_name }}_department"
@@ -35,6 +30,11 @@
     name: "{{ department_name }}_department"
     members: "{{ user }}"
     state: pure
+
+# - name: Get department_name users
+#   win_shell: (get-aduser -LDAPFilter "(department={{ department_name }})").samaccountname
+#   register: ad_users_list
+#   changed_when: False
 
 - name: Add User Vagrant in Group Development
   win_domain_group_membership:
