@@ -37,28 +37,28 @@
 ### Download
 
 - Version 2.2.9
-- https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm\
+- https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm
 - `sudo wget <https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rp`
 
 ### Install
 
-`sudo yum localinstall vagrant_2.2.9_x86_64.rpm -y`
-`vagrant ––version`
+- `sudo yum localinstall vagrant_2.2.9_x86_64.rpm -y`
+- `vagrant ––version`
 
 ### Install Vagrant Plugins
 
-- vagrant plugin install vagrant-hostmanager
-- vagrant plugin install vagrant-reload
-- vagrant plugin install vagrant-scp
-- vagrant plugin install vagrant-vbguest
+- `vagrant plugin install vagrant-hostmanager`
+- `vagrant plugin install vagrant-reload`
+- `vagrant plugin install vagrant-scp`
+- `vagrant plugin install vagrant-vbguest`
 
 ## Create Box
 
 - clone this reposotory
-- cd vagrant-ad
-- vagrant up
-- vagrant status
-- vagrant ssh
+- `cd vagrant-ad`
+- `vagrant up`
+- `vagrant status`
+- `vagrant ssh`
 
 ## Base Vagrantfile
 
