@@ -25,25 +25,25 @@
 
 ## References
 
-- Git: <https://git-scm.com/doc>
-- VirtualBox: <https://www.virtualbox.org/wiki/Documentation>
-- Vagrant: <https://www.vagrantup.com/docs/index.html>
-- Ansible: <https://docs.ansible.com/ansible/latest/index.html>
-- Powershell modules used in this project:<https://docs.microsoft.com/en-us/powershell/module/>
-- Active Directory with DSC: <http://www.ntweekly.com/2020/08/28/create-organizational-units-with-ansible-on-active-directory/>
+- [Git](https://git-scm.com/doc)
+- [VirtualBox](https://www.virtualbox.org/wiki/Documentation)
+- [Vagrant](https://www.vagrantup.com/docs/index.html)
+- [Ansible](https://docs.ansible.com/ansible/latest/index.html)
+- [Powershell modules used in this project](https://docs.microsoft.com/en-us/powershell/module/)
+- [Active Directory with DSC](http://www.ntweekly.com/2020/08/28/create-organizational-units-with-ansible-on-active-directory/)
 
 ## Install Vagrant in Rhel Centos 7\8
 
 ### Download
 
 - Version 2.2.9
-- <https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm>
-- sudo wget <https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm>
+- https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm\
+- `sudo wget <https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rp`
 
 ### Install
 
-- sudo yum localinstall vagrant_2.2.9_x86_64.rpm -y
-- vagrant ––version
+`sudo yum localinstall vagrant_2.2.9_x86_64.rpm -y`
+`vagrant ––version`
 
 ### Install Vagrant Plugins
 
