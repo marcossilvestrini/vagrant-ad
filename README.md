@@ -1,4 +1,6 @@
 # Provision Stack Windows Server: AD and DNS Server
+![vagrant-heart-windows](https://user-images.githubusercontent.com/62715900/95867284-5d0a7800-0d3f-11eb-8bf3-0e48db6efd19.jpg)
+
 
 ## Getting Started
 
