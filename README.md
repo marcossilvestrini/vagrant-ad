@@ -36,13 +36,13 @@
 
 ### Download
 
-- Version 2.2.9
-- https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rpm
-- `sudo wget <https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.rp`
+- Version 2.2.10
+- https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.rpm
+- `sudo wget https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.rpm`
 
 ### Install
 
-- `sudo yum localinstall vagrant_2.2.9_x86_64.rpm -y`
+- `sudo yum localinstall vagrant_2.2.10_x86_64.rpm -y`
 - `vagrant ––version`
 
 ### Install Vagrant Plugins
