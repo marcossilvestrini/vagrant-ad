@@ -1,7 +1,6 @@
 # Provision Stack Windows Server: AD and DNS Server
 ![vagrant-heart-windows](https://user-images.githubusercontent.com/62715900/95867284-5d0a7800-0d3f-11eb-8bf3-0e48db6efd19.jpg)
 
-
 ## Getting Started
 
 - Fork the project and enjoy.
@@ -36,9 +35,9 @@
 
 ### Download
 
-- Version 2.2.10
+- Version vagrant_2.2.13_x86_64.rpm
 - https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.rpm
-- `sudo wget https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.rpm`
+- `sudo wget https://releases.hashicorp.com/vagrant/2.2.13/vagrant_2.2.13_x86_64.rpm`
 
 ### Install
 
